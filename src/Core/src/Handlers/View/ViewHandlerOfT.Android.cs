@@ -35,6 +35,7 @@ namespace Microsoft.Maui.Handlers
 				return;
 			}
 
+			
 			var left = Context.ToPixels(frame.Left);
 			var top = Context.ToPixels(frame.Top);
 			var bottom = Context.ToPixels(frame.Bottom);

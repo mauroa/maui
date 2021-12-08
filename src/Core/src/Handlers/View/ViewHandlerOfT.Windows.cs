@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Microsoft.Maui.Graphics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -37,6 +38,9 @@ namespace Microsoft.Maui.Handlers
 
 			if (nativeView == null)
 				return Size.Zero;
+
+			widthConstraint = AdjustForExplicitSize(widthConstraint, nativeView.Width);
+			heightConstraint = AdjustForExplicitSize(heightConstraint, nativeView.Height);
 
 			if (widthConstraint < 0 || heightConstraint < 0)
 				return Size.Zero;
@@ -84,6 +88,16 @@ namespace Microsoft.Maui.Handlers
 				oldParent?.Children.Insert(idx, NativeView);
 			else
 				oldParent?.Children.Add(NativeView);
+		}
+
+		static double AdjustForExplicitSize(double externalConstraint, double explicitValue)
+		{
+			if (double.IsNaN(explicitValue))
+			{
+				return externalConstraint;
+			}
+
+			return Math.Max(externalConstraint, explicitValue);
 		}
 	}
 }
